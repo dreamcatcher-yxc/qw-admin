@@ -1,0 +1,78 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpathtarget/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+**/application-lcl.properties
+.mvn
+/mvnw.cmd
+/mvnw
+target/
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+/target
+/*.iml
+!/ompServer/src/main/resources/application-lcl.properties
+/ompServer/src/main/resources/templates/settlement/simulate.ftl
+/ompServer/src/main/resources/templates/settlement/test.ftl
+/ompServer/src/main/resources/application-lcl.properties
+
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+**/application-lcl.properties
+.mvn
+/mvnw.cmd
+/mvnw
+target/
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+/target
+/*.iml
+
+### Gradle ###
+.gradle
+.gradle
+.gradle
+/water/.gradle
+
+### Node ###
+node_modules/
+/app/unpackage

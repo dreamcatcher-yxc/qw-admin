@@ -1,0 +1,148 @@
+server:
+  port: 8443
+  tomcat:
+    basedir: D:\\tmp\\tomcat
+    accesslog:
+      enabled: false
+
+## thymleaf 相关配置
+spring.thymeleaf:
+  cache: false
+  check-template: true
+  check-template-location: true
+  servlet.content-type: text/html
+  enabled: true
+  encoding: UTF-8
+  mode: LEGACYHTML5
+  prefix: classpath:/templates
+  suffix: .html
+
+# 数据库配置
+spring.jpa:
+  hibernate:
+    ddl-auto: validate
+spring.jpa.properties.hibernate:
+  format_sql: false
+  show_sql: true
+  dialect: com.qiwen.base.config.db.MySQL5InnoDBDialectUtf8mb4
+
+# 数据源配置
+spring:
+  datasource:
+    primary:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-Name: com.mysql.jdbc.Driver
+      platform: mysql
+      url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&characterEncoding=utf-8&autoReconnect=true
+      username: root
+      password: root
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-Millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      filters: stat,wall
+      log-slow-sql: true
+    yjyx:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-Name: com.mysql.jdbc.Driver #com.microsoft.sqlserver.jdbc.SQLServerDriver
+      platform: mysql
+      url: jdbc:mysql://127.0.0.1:3306/test2?useSSL=false&characterEncoding=utf-8&autoReconnect=true
+      username: root
+      password: root
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-Millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      filters: stat,wall
+      log-slow-sql: true
+    quartz:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-Name: com.mysql.jdbc.Driver
+      platform: mysql
+      url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&characterEncoding=utf-8&autoReconnect=true
+      username: root
+      password: root
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-Millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      filters: stat,wall
+      log-slow-sql: true
+
+# quartz 相关配置
+spring.quartz:
+  job-store-type: jdbc
+  jdbc:
+    initialize-schema: never
+  properties:
+    "org.quartz.scheduler.instanceName": DefaultQuartzScheduler
+    "org.quartz.scheduler.rmi.export": false
+    "org.quartz.scheduler.rmi.proxy": false
+    "org.quartz.scheduler.wrapJobExecutionInUserTransaction": false
+    "org.quartz.threadPool.class": org.quartz.simpl.SimpleThreadPool
+    "org.quartz.threadPool.threadCount": 5
+    "org.quartz.threadPool.threadPriority": 5
+    "org.quartz.threadPool.threadsInheritContextClassLoaderOfInitializingThread": true
+    "org.quartz.jobStore.misfireThreshold": 5000
+    "org.quartz.jobStore.class": org.quartz.impl.jdbcjobstore.JobStoreTX
+    "org.quartz.jobStore.tablePrefix": QRTZ_
+
+################################ 监控 Filter 配置 ################################
+spring.datasource.druid.web-stat-filter:
+  enabled: true
+  url-pattern: /*
+  exclusions: "/druid/*,/static/*,/webjars/*,/web-admin/*"
+  session-stat-enable: true
+  session-stat-max-count: 1000
+  principal-session-name: login-user
+  profile-enable: true
+
+
+################################ 监控 Servlet 配置 ################################
+spring.datasource.druid.stat-view-servlet:
+  enabled: true
+  url-pattern: /druid/*
+  reset-enable: true
+  login-username: admin
+  login-password: 123456
+  allow:
+  deny:
+
+# 基础配置
+qw-global-base-dir: D:\tmp\qw-admin-server\
+
+qw.constant.web:
+  external-web-resources:
+    - resource-handlers:
+        - /yjyxapp/**
+      resource-locations:
+        - file:${qw-global-base-dir}www/
+      cache-control-bean-name: yjyxDefaultCacheControlBean
+    - resource-handlers:
+        - /web-admin/**
+      resource-locations:
+        - file:D:/data/YGWL_COMPANY/qw-admin/qw-admin-web/static/
+      cache-control-bean-name: yjyxDefaultCacheControlBean
+
+# 新增模块配置
+yjyx:
+  foo-val1: fooVal1-dev
+  foo-val2: fooVal2-dev

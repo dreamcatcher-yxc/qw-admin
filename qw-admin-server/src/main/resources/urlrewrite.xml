@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN"
+        "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
+<urlrewrite>
+    <rule>
+        <name>后管策略-1</name>
+        <note>note1</note>
+        <condition type="remote-host">admin.example.com</condition>
+        <from>^/(web|system|test|dashboard|account)/(.+)</from>
+        <to>/web-admin/index.html</to>
+    </rule>
+    <rule>
+        <name>后管策略-2</name>
+        <note>note2</note>
+        <condition type="remote-host">admin.example.com</condition>
+        <from>^/(index|login)$</from>
+        <to>/web-admin/index.html</to>
+    </rule>
+</urlrewrite>

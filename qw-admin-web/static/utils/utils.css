@@ -1,0 +1,74 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: auto;
+  background: #f0f2f5 url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg') no-repeat center 110px;
+  background-size: 100%;
+}
+.container .content {
+  padding: 32px 0;
+  flex: 1;
+}
+@media (min-width: 768px) {
+  .container .content {
+  padding: 112px 0 24px;
+}
+
+}
+.container .content .top {
+  text-align: center;
+}
+.container .content .top .header {
+  height: 44px;
+  line-height: 44px;
+}
+.container .content .top .header a {
+  text-decoration: none;
+}
+.container .content .top .header .logo {
+  height: 44px;
+  vertical-align: top;
+  margin-right: 16px;
+}
+.container .content .top .header .title {
+  font-size: 33px;
+  color: rgba(0, 0, 0, 0.85);
+  font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  position: relative;
+  top: 2px;
+}
+.container .content .top .desc {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+  margin-top: 12px;
+  margin-bottom: 40px;
+}
+.container .content .login {
+  width: 368px;
+  margin: 0 auto;
+}
+@media screen and (max-width: 576px) {
+  .container .content .login {
+  width: 95%;
+}
+
+}
+@media screen and (max-width: 320px) {
+  .container .content .login .captcha-button {
+  font-size: 14px;
+}
+
+}
+.container .content .login .icon {
+  font-size: 24px;
+  color: rgba(0, 0, 0, 0.2);
+  margin-left: 16px;
+  vertical-align: middle;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.container .content .login .icon:hover {
+  color: #1890ff;
+}

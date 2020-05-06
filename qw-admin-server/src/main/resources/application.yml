@@ -1,0 +1,79 @@
+server.servlet.session:
+  tracking-modes: cookie
+  cookie:
+    http-only: true
+
+spring.profiles:
+  active: dev
+
+spring.application:
+  name: yjyx
+  version: 0.1.0
+
+spring.mvc:
+  static-path-pattern: /static/**
+
+## 配置当前的环境的测试环境
+spring.http.encoding:
+  charset: UTF-8
+  enabled: true
+  force: true
+
+## 关闭缓存
+##spring.resources.chain.cache: false
+
+#启用GZIP压缩
+server.compression:
+  enabled: true
+  mime-types: text/javascript,text/css,text/plain,application/x-javascript,text/html,text/xml,application/json,application/javascript
+
+# 文件上传配置
+spring.servlet.multipart:
+  enabled: true
+  max-file-size: 100Mb
+  max-request-size: 100Mb
+
+#请求出现错误, 由全局异常处理类处理
+spring.mvc.throw-exception-if-no-handler-found: true
+
+## 缓存配置
+spring.cache:
+  type: ehcache
+  ehcache:
+    config: classpath:ehcache.xml
+
+# 应用基础环境配置 (windows 环境)
+qw.constant.web:
+  quartz-job-scan-packages:
+    - com.qiwen.base.config.job
+    - com.qiwen.yjyx.config.job
+  privilege-scan-packages:
+    - com.qiwen.base.controller
+    - com.qiwen.yjyx.controller
+  application-name: QW-Spring-Boot-Admin
+  login-user-customer-key: login-customer
+  login-user-key: login-user
+  password-salt: qw-gateway
+  default-error-page: /admin/error
+  file-temp-dir: ${qw-global-base-dir}temp
+  file-save-dir: ${qw-global-base-dir}upload
+  public-doc-dir: ${qw-global-base-dir}doc
+  config-base-dir: ${qw-global-base-dir}conf
+  external-web-resources:
+    - resource-handlers:
+        - /yjyxapp/**
+      resource-locations:
+        - file:${qw-global-base-dir}www/
+      cache-control-bean-name: yjyxDefaultCacheControlBean
+    - resource-handlers:
+        - /web-admin/**
+      resource-locations:
+        - file:${qw-global-base-dir}admin-web/static/
+      cache-control-bean-name: yjyxDefaultCacheControlBean
+  img-via-base-path: /imgs/view/find/
+  super-username: admin
+  super-user-pwd: 123456
+  generate-super-user-info: false
+  ip2-region:
+    db-path: ${qw-global-base-dir}conf/ip2region.db
+    algorithm: B-tree

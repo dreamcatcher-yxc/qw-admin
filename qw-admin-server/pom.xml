@@ -1,0 +1,637 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.qiwen</groupId>
+	<artifactId>qw-admin-server</artifactId>
+	<version>1.0.0-snapshot</version>
+	<packaging>jar</packaging>
+
+	<name>qw-admin-server</name>
+	<description>基于 Spring Boot、Shiro 的快速开发权限管理平台</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.2.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<!--logback-->
+		<janino.version>3.0.6</janino.version>
+		<!--fileupload-->
+		<fileupload.version>6.2.0.1</fileupload.version>
+		<!--数据库监控-->
+		<druid.version>1.1.10</druid.version>
+		<!--工具包-->
+		<commons-lang3.version>3.5</commons-lang3.version>
+		<commons-lang.version>2.6</commons-lang.version>
+        <!--日志记录-->
+        <slf4j.version>1.7.25</slf4j.version>
+        <logback.version>1.2.2</logback.version>
+        <!--lombok-->
+        <lombok.version>1.16.16</lombok.version>
+        <!--main-class-->
+        <main-class>com.qiwen.Application</main-class>
+        <!--QueryDSL 编译插件-->
+        <apt-maven-plugin.version>1.1.3</apt-maven-plugin.version>
+        <!--QueryDSL web 环境运行依赖-->
+        <javax-inject.version>1</javax-inject.version>
+
+		<!--验证码生成插件-->
+		<patchca.version>1.1.0</patchca.version>
+		<janino.version>3.0.6</janino.version>
+		<!--html解析库-->
+        <jsoup.version>1.8.2</jsoup.version>
+        <!--图片裁剪工具-->
+        <thumbnailator.version>0.4.8</thumbnailator.version>
+        <!--springMVC Http 资源缓存-->
+        <spring-mvc-cache-control.version>1.1.1-RELEASE</spring-mvc-cache-control.version>
+		<!--idea plugin 版本-->
+		<maven-idea-plugin.version>2.2.1</maven-idea-plugin.version>
+		<!--阿里短信支持-->
+		<aliyun-java-sdk-core.version>4.0.6</aliyun-java-sdk-core.version>
+		<aliyun-java-sdk-dysmsapi.version>1.1.0</aliyun-java-sdk-dysmsapi.version>
+		<!--excel-util-->
+		<excel-util.version>1.2.1</excel-util.version>
+		<!--http-client-->
+		<http-client.version>4.5.3</http-client.version>
+		<!--支付工具-->
+		<ijpay.version>1.1.9</ijpay.version>
+		<!--支付宝依赖版本-->
+		<alipay.version>3.0.52.ALL</alipay.version>
+		<fastjson.version>1.2.6</fastjson.version>
+		<common-logging.version>1.2</common-logging.version>
+		<!--WeUI 依赖-->
+		<weui.version>1.1.3</weui.version>
+		<!--zeptojs 依赖-->
+		<zeptojs.version>1.2.0</zeptojs.version>
+		<!-- mybaits-plus -->
+		<mybatis-plus.version>3.1.0</mybatis-plus.version>
+		<!-- velocity 版本 -->
+		<velocity.version>2.1</velocity.version>
+		<!-- sqlServer 版本 -->
+		<sql-server.version>4.0</sql-server.version>
+		<!-- cglib -->
+		<cglib.version>3.2.9</cglib.version>
+		<!-- shiro -->
+		<shiro-spring.version>1.4.0</shiro-spring.version>
+		<shiro-ehcache.version>1.5.1</shiro-ehcache.version>
+		<urlrewritefilter.version>4.0.4</urlrewritefilter.version>
+		<!-- ip 地址查找工具类 -->
+		<lionsoul.version>1.7.2</lionsoul.version>
+		<!-- 根据 http user-agent 请求头获取客户端信息工具类 -->
+		<user-agent-utils.version>1.21</user-agent-utils.version>
+
+		<!--quartz-c3p0 版本-->
+		<quartz-c3p0.version>0.9.5.2</quartz-c3p0.version>
+	</properties>
+
+	<dependencies>
+		<!--
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+	    -->
+
+		<!--queryDSL-jpa-->
+		<!--begin-->
+		<dependency>
+			<groupId>com.querydsl</groupId>
+			<artifactId>querydsl-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.querydsl</groupId>
+			<artifactId>querydsl-apt</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>${javax-inject.version}</version>
+		</dependency>
+		<!--end-->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+		<!-- mybatis-plus -->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>${mybatis-plus.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-generator</artifactId>
+			<version>${mybatis-plus.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity-engine-core</artifactId>
+			<version>${velocity.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- sqlServer jdbc 驱动 -->
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>sqljdbc4</artifactId>
+			<version>${sql-server.version}</version>
+		</dependency>
+
+		<!-- mysql jdbc 驱动 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+
+		<!-- thymeleaf 模板引擎 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+		<!-- 使用 tomcat 内嵌 web 容器 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+		</dependency>
+
+        <!--解决直接使用 CommonFileUpload 文件上传工厂类不存在的问题-->
+        <dependency>
+            <groupId>com.liferay.org.apache.commons.fileupload</groupId>
+            <artifactId>com.liferay.org.apache.commons.fileupload</artifactId>
+            <version>${fileupload.version}</version>
+        </dependency>
+
+		<!-- druid 数据源支持 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+
+        <!--日志-->
+        <!-- logback -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+			<!--<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>-->
+            <version>${logback.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
+            <version>${janino.version}</version>
+        </dependency>
+
+        <!--lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+		<!--配置 thymleaf 非严格模式-->
+		<dependency>
+			<groupId>net.sourceforge.nekohtml</groupId>
+			<artifactId>nekohtml</artifactId>
+		</dependency>
+
+        <!--spring-security 扩展的一套 thymeleaf 扩展库-->
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- quartz(定时任务执行框架) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-quartz</artifactId>
+		</dependency>
+
+		<!-- 数据源, quartz 需要 -->
+		<!--
+		<dependency>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>${quartz-c3p0.version}</version>
+		</dependency>
+		-->
+
+		<!--开启 cache 缓存支持-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
+
+		<!-- ehcache 缓存 -->
+		<!--
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+		</dependency>
+		-->
+
+		<!--常用工具包-->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>${commons-lang.version}</version>
+		</dependency>
+
+		<!--GSON(JSON解析工具)-->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
+
+		<!--验证码-->
+		<dependency>
+			<groupId>com.bladejava</groupId>
+			<artifactId>blade-patchca</artifactId>
+			<version>${patchca.version}</version>
+		</dependency>
+
+		<!--Generating Your Own Metadata by Using the Annotation Processor-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+			<scope>provided</scope>
+		</dependency>
+
+		<!--html 解析工具-->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>Jsoup</artifactId>
+            <version>${jsoup.version}</version>
+        </dependency>
+
+		<!-- excel 工具 -->
+		<dependency>
+			<groupId>com.sargeraswang.util</groupId>
+			<artifactId>excel-util</artifactId>
+			<version>${excel-util.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.javen205</groupId>
+			<artifactId>IJPay</artifactId>
+			<version>${ijpay.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!--阿里短信支持-->
+		<dependency>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-core</artifactId>
+			<version>${aliyun-java-sdk-core.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+			<version>${aliyun-java-sdk-dysmsapi.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!--springBoot 的 aop-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
+		<!-- http 请求-->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>${http-client.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId>
+			<version>${http-client.version}</version>
+		</dependency>
+
+		<!--dom4j, 默认版本为 1.6.1-->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+		</dependency>
+
+		<!-- IP地址查找客户端 -->
+		<dependency>
+			<groupId>org.lionsoul</groupId>
+			<artifactId>ip2region</artifactId>
+			<version>${lionsoul.version}</version>
+		</dependency>
+
+		<!-- http user-agent 解析工具 -->
+		<dependency>
+			<groupId>eu.bitwalker</groupId>
+			<artifactId>UserAgentUtils</artifactId>
+			<version>${user-agent-utils.version}</version>
+		</dependency>
+
+		<!-- cglib -->
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>${cglib.version}</version>
+		</dependency>
+
+		<!-- apache-shiro -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>${shiro-spring.version}</version>
+		</dependency>
+
+		<!-- apache-shiro-ehcache 支持 -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-ehcache</artifactId>
+			<version>${shiro-ehcache.version}</version>
+		</dependency>
+
+		<!-- urlrewritefilter -->
+		<dependency>
+			<groupId>org.tuckey</groupId>
+			<artifactId>urlrewritefilter</artifactId>
+			<version>${urlrewritefilter.version}</version>
+		</dependency>
+
+		<!--图片裁剪工具, GOOGLE-->
+		<dependency>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+			<version>${thumbnailator.version}</version>
+		</dependency>
+	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>alipay</id>
+			<activation>
+				<property>
+					<name>alipay</name>
+				</property>
+			</activation>
+			<dependencies>
+				<!--支付-->
+				<dependency>
+					<groupId>com.github.javen205</groupId>
+					<artifactId>IJPay</artifactId>
+					<version>${ijpay.version}</version>
+				</dependency>
+
+				<!--支付宝支付必须-->
+				<dependency>
+					<groupId>com.alipay.sdk</groupId>
+					<artifactId>alipay-sdk-java</artifactId>
+					<version>${alipay.version}</version>
+				</dependency>
+
+				<dependency>
+					<groupId>com.alibaba</groupId>
+					<artifactId>fastjson</artifactId>
+					<version>${fastjson.version}</version>
+				</dependency>
+
+				<dependency>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+					<version>${common-logging.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<!-- 短信支持需要包含此 profile -->
+		<profile>
+			<id>alisms</id>
+			<activation>
+				<property>
+					<name>alisms</name>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>com.aliyun</groupId>
+					<artifactId>aliyun-java-sdk-core</artifactId>
+					<version>${aliyun-java-sdk-core.version}</version>
+				</dependency>
+
+				<dependency>
+					<groupId>com.aliyun</groupId>
+					<artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+					<version>${aliyun-java-sdk-dysmsapi.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<property>
+					<name>dev</name>
+				</property>
+			</activation>
+		</profile>
+	</profiles>
+
+	<build>
+		<plugins>
+			<!--<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>${main-class}</mainClass>
+					<fork>true</fork>
+					&lt;!&ndash;增加jvm参数&ndash;&gt;
+					<jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>-->
+
+			<!--QueryDSL-->
+			<plugin>
+				<groupId>com.mysema.maven</groupId>
+				<artifactId>apt-maven-plugin</artifactId>
+				<version>${apt-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/generated-sources/java</outputDirectory>
+							<processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<!-- idea project-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-idea-plugin</artifactId>
+				<version>${maven-idea-plugin.version}</version>
+				<configuration>
+				  <jdkLevel>${java.version}</jdkLevel>
+				</configuration>
+			</plugin>
+
+			<!--打包jar-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<!--MANIFEST.MF 中 Class-Path 加入前缀-->
+							<classpathPrefix>lib/</classpathPrefix>
+							<!--jar包不包含唯一版本标识-->
+							<useUniqueVersions>false</useUniqueVersions>
+							<!--指定入口类-->
+							<mainClass>${main-class}</mainClass>
+						</manifest>
+						<manifestEntries>
+							<!--MANIFEST.MF 中 Class-Path 加入资源文件目录-->
+							<Class-Path>/resources</Class-Path>
+						</manifestEntries>
+					</archive>
+					<!-- 可以指定不需要打包的资源 -->
+					<!--
+					<excludes>
+						<exclude>**/com/qiwen/yjyx/**</exclude>
+					</excludes>
+					-->
+					<outputDirectory>${project.build.directory}/dist</outputDirectory>
+				</configuration>
+			</plugin>
+
+			<!--拷贝依赖 copy-dependencies-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<includeScope>runtime</includeScope>
+							<outputDirectory>
+								${project.build.directory}/dist/lib/
+							</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!--拷贝资源文件 copy-resources-->
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>src/main/resources</directory>
+								</resource>
+							</resources>
+							<outputDirectory>${project.build.directory}/dist/resources</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!--spring boot repackage，依赖 maven-jar-plugin 打包的jar包 重新打包成 spring boot 的jar包-->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+                    <!--<mainClass>${main-class}</mainClass>
+                    <fork>true</fork>-->
+                    <!--增加jvm参数-->
+                    <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
+					<layout>ZIP</layout>
+					<!--使用外部配置文件，jar包里没有资源文件-->
+					<addResources>true</addResources>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

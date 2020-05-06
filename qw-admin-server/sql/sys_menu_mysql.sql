@@ -1,0 +1,13 @@
+INSERT INTO `sys_menu` VALUES (91, '1-1', '1', 1, '系统配置', '', 'setting', '系统用户、权限、任务相关管理', 0, 'yangxiuchu', '2018-04-07 22:09:31', 'admin', '2018-04-07 22:09:31');
+INSERT INTO `sys_menu` VALUES (124, '1-1-0', '1-1', 0, '用户管理', '/system/user/index', 'user', '用户管理页面', 1, 'yangxiuchu', '2018-04-07 22:09:31', 'admin', '2018-04-07 22:09:31');
+INSERT INTO `sys_menu` VALUES (127, '1-0', '1', 0, '控制台', '/dashboard/workplace', NULL, '控制台', 1, 'yangxiuchu', '2018-04-07 22:09:31', 'admin', '2018-04-07 22:09:31');
+INSERT INTO `sys_menu` VALUES (128, '1-1-1', '1-1', 1, '角色/权限管理', '/system/role/index', 'share-alt', '角色权限管理页面', 1, 'yangxiuchu', '2018-04-07 22:09:31', 'admin', '2018-04-07 22:09:31');
+INSERT INTO `sys_menu` VALUES (132, '1-1-2', '1-1', 2, '作业管理', '/system/task/index', 'solution', '监控系统预定义的任务执行情况。', 1, 'yangxiuchu', '2018-04-08 21:59:31', 'admin', NULL);
+INSERT INTO `sys_menu` VALUES (134, '1-2-1', '1-2', 1, '任务日志管理', '/system/task-logs/index', 'profile', '系统工作日志信息管理', 1, 'yangxiuchu', '2018-05-27 14:11:34', 'admin', NULL);
+INSERT INTO `sys_menu` VALUES (137, '1-2', '1', 2, '日志管理', 'aaa', 'file-text', '对APP端的内容数据进行管理', 0, 'admin', '2018-09-11 13:28:12', 'admin', NULL);
+INSERT INTO `sys_menu` VALUES (148, '1-2-0', '1-2', 0, '操作日志管理', '/system/operate-logs/index', 'file-text', '管理系统操作日志信息', 1, 'admin', '2018-12-14 15:25:58', 'admin', NULL);
+INSERT INTO `sys_menu` VALUES (154, '1-3', '1', 3, '测试菜单', '', NULL, '', 0, 'admin', '2019-05-08 08:35:45', 'admin', NULL);
+INSERT INTO `sys_menu` VALUES (155, '1-3-1', '1-3', 1, 'test1', '/test/index', 'vertical-left', '', 1, 'admin', '2019-05-08 08:36:02', 'admin', NULL);
+INSERT INTO `sys_menu` VALUES (156, '1-2-2', '1-2', 2, '登录日志管理', '/system/login-logs/index', 'idcard', '查看用户登录日志', 1, 'admin', '2020-04-26 08:57:11', 'admin', NULL);
+INSERT INTO `sys_menu` VALUES (157, '1-1-3', '1-1', 3, '在线用户管理', '/system/online-user/index', 'team', '', 1, 'admin', '2020-04-26 11:59:47', 'admin', NULL);
+INSERT INTO `sys_menu` VALUES (160, '1-3-0', '1-3', 0, 'new node 1-3-1', '', NULL, '', 1, 'admin', '2020-05-02 08:33:38', 'admin', NULL);
