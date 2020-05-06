@@ -27,7 +27,8 @@ module.exports = asyncRequire([
     data () {
       return {
         isEdit: false,
-        editData: { }
+        editData: {},
+        checkedNodeIds: []
       }
     },
     mounted () {
@@ -51,8 +52,9 @@ module.exports = asyncRequire([
           });
       },
 
-      initTree (menus) {
+      initTree (menus, checkedNodeIds) {
         var self = this;
+        var checkedNodeIds
 
         var treeNodes = trees.convert(!!menus ? menus : [], function(i, n) {
           return {
@@ -60,7 +62,7 @@ module.exports = asyncRequire([
             id : n.treeId,
             pId : n.treeParentId,
             orderIndex : n.orderIndex,
-            open: !n.isLeaf,
+            open: checkedNodeIds.length === 0 ? !n.isLeaf : $.inArray(n.treeId, checkedNodeIds) >= 0,
             isLeaf : n.isLeaf,
             name : n.name,
             url : n.url,
@@ -107,26 +109,27 @@ module.exports = asyncRequire([
           var root = zTree.getNodesByFilter(function (node) { return node.level == 0 }, true);
           function generate(parentId, parentNode, newNodes) {
             if(parentNode.isParent) {
-                var base = 0;
+                var baseIndex = 0;
                 for(var i = 0; i < parentNode.children.length; i++) {
-                    var t = parentNode.children[i];
-                    if(excludeSubTreeRootId === t.id) {
+                    var currNode = parentNode.children[i];
+                    if(excludeSubTreeRootId === currNode.id) {
                         continue;
                     }
-                    var newId = parentId + '-' + base;
+                    var newId = parentId + '-' + baseIndex;
                     newNodes.push({
                         id : newId,
                         pId : parentId,
-                        orderIndex : base,
-                        isLeaf :  !t.isParent || (t.isParent && t.children.length === 1 && t.children[0].id === excludeSubTreeRootId) ? 1 : 0,
-                        oldId : t.id,
-                        oldPId : t.pId,
-                        oldOrderIndex : t.orderIndex,
-                        oldIsLeaf : t.isLeaf,
-                        bId : t.bId
+                        orderIndex : baseIndex,
+                        isLeaf :  !currNode.isParent || (currNode.isParent && currNode.children.length === 1 && currNode.children[0].id === excludeSubTreeRootId) ? 1 : 0,
+                        oldId : currNode.id,
+                        oldPId : currNode.pId,
+                        oldOrderIndex : currNode.orderIndex,
+                        oldIsLeaf : currNode.isLeaf,
+                        bId : currNode.bId,
+                        open: currNode.open
                     });
-                    base++;
-                    generate(newId, t, newNodes);
+                    baseIndex++;
+                    generate(newId, currNode, newNodes);
                 }
             }
           }
@@ -188,35 +191,39 @@ module.exports = asyncRequire([
             onOk: () => {
               self.showLoading();
               var needInfos = generateTreeNodeInfo(treeNode.id);
-                var needRefershInfos = [];
-                for(var i = 0; i < needInfos.length; i++) {
-                    var tInfo = needInfos[i];
-                    if(tInfo.id !== tInfo.oldId
-                        || tInfo.pId !== tInfo.oldPId
-                        || tInfo.isLeaf !== tInfo.oldIsLeaf
-                        || tInfo.orderIndex !== tInfo.oldOrderIndex) {
-                        needRefershInfos.push(tInfo);
-                    }
-                }
-                var adjusts = $.map(needRefershInfos, function (n, i) {
-                    return n.bId + ',' + n.id + ',' + n.pId + ',' + n.isLeaf + ',' + n.orderIndex;
-                }).join(';');
+              var needRefershInfos = [];
+              for(var i = 0; i < needInfos.length; i++) {
+                  var tInfo = needInfos[i];
+                  if(tInfo.id !== tInfo.oldId
+                      || tInfo.pId !== tInfo.oldPId
+                      || tInfo.isLeaf !== tInfo.oldIsLeaf
+                      || tInfo.orderIndex !== tInfo.oldOrderIndex) {
+                      needRefershInfos.push(tInfo);
+                  }
+              }
+              var adjusts = $.map(needRefershInfos, function (n, i) {
+                  return n.bId + ',' + n.id + ',' + n.pId + ',' + n.isLeaf + ',' + n.orderIndex;
+              }).join(';');
 
-                var ids = $.map(getSubAllNodes(treeNode, true), function(n, i) {
-                  return n.bId;
-                }).join(',');
+              var ids = $.map(getSubAllNodes(treeNode, true), function(n, i) {
+                return n.bId;
+              }).join(',');
 
-                var formData = {ids : ids, adjusts : adjusts};
-                self.showLoading();
-                MenuAPIS.deleteMenuNodes(formData)
-                  .then(resp => {
-                    zTree.removeNode(treeNode);
-                    self.$message.success('删除成功');
-                  })
-                  .catch(resp => {
-                    self.$message.error(resp.message);
-                  })
-                  .finally(() => self.hideLoading());
+              var formData = {ids : ids, adjusts : adjusts};
+              self.showLoading();
+              MenuAPIS.deleteMenuNodes(formData)
+                .then(resp => {
+                  zTree.removeNode(treeNode);
+                  self.$message.success('删除成功');
+                })
+                .catch(resp => {
+                  self.$message.error(resp.message);
+                })
+                .finally(() => self.hideLoading())
+                .then(() => {
+                  self.checkedNodeIds = needInfos.filter(node => node.open).map(node => node.id);
+                  self.init();
+                });
             },
             onCancel() {}
           });
@@ -394,7 +401,11 @@ module.exports = asyncRequire([
                   .then(resp => {
                     self.$message.success('节点位置调整数据同步成功');
                   })
-                  .finally(() => self.hideLoading());
+                  .finally(() => self.hideLoading())
+                  .then(() => {
+                    self.checkedNodeIds = nodeInfos.filter(node => node.open).map(node => node.id);
+                    self.init();
+                  });
               },
               beforeEditName: beforeEditName,
               beforeRemove: beforeRemove,
@@ -437,7 +448,7 @@ module.exports = asyncRequire([
       init () {
         this.showLoading();
         this.fetchMenuData()
-          .then(menus => this.initTree(menus))
+          .then(menus => this.initTree(menus, this.checkedNodeIds))
           .finally(() => this.hideLoading());
       },
     }

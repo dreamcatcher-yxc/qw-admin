@@ -87,6 +87,7 @@ define(['jquery'], function($){
 
             return len1 === len2 ? 0 : ((len1 > len2) ? 1 : -1)
         },
+
         __toTreeNodes : function (serverRespData, converter) {
             var tArr = [];
             $.each(serverRespData, function (i, n) {

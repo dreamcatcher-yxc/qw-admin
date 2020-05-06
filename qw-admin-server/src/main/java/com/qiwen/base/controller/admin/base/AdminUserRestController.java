@@ -59,6 +59,7 @@ public class AdminUserRestController {
     @Desc(value = "r-用户添加", name = "user-add")
     @PostMapping("/add")
     public String add(User user) {
+        user.setStatus(0);
         userService.save(user);
         return Result.ok().json();
     }
