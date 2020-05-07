@@ -27,65 +27,71 @@
 
 ## 2.2、配置项目数据库连接
 
-1. 配置项目数据库连接
+打开 `qw-admin-server/src/main/resources/application-dev.yml` (根据开发环境而言)，相关配置如下:
 
-   打开 `qw-admin-server/src/main/resources/application-dev.yml` (根据开发环境而言)，相关配置如下:
-
-   ```yaml
-   # 多数据源配置
-   spring:
-     datasource:
-     	# 主数据源配置
-       primary:
-         type: com.alibaba.druid.pool.DruidDataSource
-         driver-class-Name: com.mysql.jdbc.Driver
-         # 数据库平台
-         platform: mysql
-         # 数据库地址
-         url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&characterEncoding=utf-8&autoReconnect=true
-         # 用户名
-         username: root
-         # 密码
-         password: root
-         initial-size: 5
-         min-idle: 5
-         max-active: 20
-         max-wait: 60000
-         time-between-eviction-runs-Millis: 60000
-         min-evictable-idle-time-millis: 300000
-         validation-query: SELECT1FROMDUAL
-         test-while-idle: true
-         test-on-borrow: false
-         test-on-return: false
-         filters: stat,wall,log4j
-         log-slow-sql: true
-      
-       # 测试新增模块数据源配置
-       yjyx:
-         type: com.alibaba.druid.pool.DruidDataSource
-         driver-class-Name: com.mysql.jdbc.Driver #com.microsoft.sqlserver.jdbc.SQLServerDriver
-         platform: mysql
-         url: jdbc:mysql://127.0.0.1:3306/test2?useSSL=false&characterEncoding=utf-8&autoReconnect=true
-         username: root
-         password: root
-         
-   ```
-
-> 具体配置请参看相关配置文件，如需新增不同环境配置可自行添加配置文件
-
-2、配置 quartz 数据库连接配置
-
-​	打开 `qw-admin-server/src/main/resources/quartz-dev.properties` (根据开发环境而言)，相关配置如下:
-
-```properties
-# 数据库驱动
-org.quartz.dataSource.qzDS.driver = com.mysql.jdbc.Driver
-# 数据库连接地址
-org.quartz.dataSource.qzDS.URL = jdbc:mysql://localhost:3306/db_test?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
-# 用户名
-org.quartz.dataSource.qzDS.user = root
-# 密码
-org.quartz.dataSource.qzDS.password = root
+```yaml
+spring:
+  datasource:
+    # 主数据源配置，即系统数据源
+    primary:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-Name: com.mysql.jdbc.Driver
+      platform: mysql
+      url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&characterEncoding=utf-8&autoReconnect=true
+      username: root
+      password: root
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-Millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      filters: stat,wall,slf4j
+      log-slow-sql: true
+    # 自定义新增模块数据库连接池配置  
+    yjyx:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-Name: com.mysql.jdbc.Driver
+      platform: mysql
+      url: jdbc:mysql://127.0.0.1:3306/test2?useSSL=false&characterEncoding=utf-8&autoReconnect=true
+      username: root
+      password: root
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-Millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      filters: stat,wall
+      log-slow-sql: true
+    # 定时任务数据库连接池配置  
+    quartz:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-Name: com.mysql.jdbc.Driver
+      platform: mysql
+      url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&characterEncoding=utf-8&autoReconnect=true
+      username: root
+      password: root
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-Millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      filters: stat,wall
+      log-slow-sql: true
 ```
 
 > 具体配置请参看相关配置文件，如需新增不同环境配置可自行添加配置文件

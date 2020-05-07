@@ -11,11 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import static com.qiwen.base.util.SystemUtil.currentLoginUser;
 
 /**
- * 权限拦截器.
- * -> 未登录用户只能访问特定的资源.
- * -> 已经登录的用户访问系统资源的时候需要根据用户的角色分配情况
- *
- * @author yangxiuchu
+ * 新增模块权限拦截器
  */
 @Slf4j
 @Component

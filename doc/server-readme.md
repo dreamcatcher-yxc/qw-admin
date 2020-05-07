@@ -48,7 +48,6 @@
     - templates
     - application.yml
     - application-dev.yml
-    - application-test.yml
     - application-prd.yml
     - ehcache.yml
     - logback-spring.xml
