@@ -4,6 +4,7 @@ package com.qiwen.yjyx.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.qiwen.base.config.annotaion.Desc;
 import com.qiwen.base.entity.OperateLog;
+import com.qiwen.base.util.LayUtil;
 import com.qiwen.base.util.Result;
 import com.qiwen.base.util.SystemUtil;
 import com.qiwen.yjyx.config.YJYXConstant;
@@ -34,7 +35,7 @@ public class YJFooController {
         this.fooService = fooService;
     }
 
-    @GetMapping("/find-all")
+    @GetMapping("/list")
     public String findAll(HttpServletRequest request) {
         OperateLog operateLog = (OperateLog) request.getAttribute(Desc.CUSTOM_ATTR_NAME);
         operateLog.setOperation(SystemUtil.currentLoginUser().getUsername());

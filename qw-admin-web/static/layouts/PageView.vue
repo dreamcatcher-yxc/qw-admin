@@ -1,7 +1,7 @@
 <template>
   <page-layout :desc="desc" :title="$route | menuName" :link-list="linkList">
     <div slot="extra" class="extraImg">
-      <img :src="extraImage"/>
+      <img :src="extraImage" />
     </div>
     <transition name="page-toggle">
       <keep-alive v-if="multipage">

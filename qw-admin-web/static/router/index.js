@@ -139,16 +139,20 @@ define([
           },
           {
             path: '/test',
-            redirect: '/test/index',
-            name: '测试功能',
+            redirect: '/test/test1',
+            name: 'test-function',
             component: PageView,
             children: [
               {
-                path: '/test/index',
+                path: 'test1',
                 name: 'test1',
-                icon: 'none',
-                component: load('@PAGE/system/index')
+                component: load('@PAGE/test/test1')
               },
+              {
+                path: 'test2',
+                name: 'test2',
+                component: load('@PAGE/test/test2')
+              }
             ]
           },
           // 个人中心
