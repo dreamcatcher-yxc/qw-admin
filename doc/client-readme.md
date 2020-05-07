@@ -429,4 +429,13 @@ div.wrapper {
 3. 效果
 ![查询天气测试](imgs/client-04.png)
 
+## 4.3、页面调试
 
+### 1) Vue 开发者工具
+
+通过 `vue-devtool` 观看页面组件数据，以 `/static/pages/test/test2.vue`页面为例子，网页打开 `http://localhost:8443/web-admin/index.dev.html`，选择 `测试菜单2`，`f12`打开 vue 开发者工具，效果如下：
+![vue开发者工具](imgs/client-05.png)
+
+### 2) 调试源码
+
+![调试源码](imgs/client-06.png)
