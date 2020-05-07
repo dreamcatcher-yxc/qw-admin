@@ -2,7 +2,7 @@
 
 # 一、介绍
 
-基于 Spring Boot、Shiro 的快速开发管理系统。
+基于 Spring Boot、Shiro 的快后台管理系统快速开发模板。
 
 > 现阶段未单体项目，后期考虑采用 java9 之后的模块化拆分系统。
 
