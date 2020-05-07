@@ -300,7 +300,7 @@ define([
 
 
 
-2. 按照 <a href="#ch4-01">4.1</a> 的教程创建创建 `/static/pages/test/test2.vue`，内容如下：
+2. 按照 <a href="#41新增页面">4.1、新增页面</a> 教程创建 `/static/pages/test/test2.vue`，内容如下：
 
 ```vue
 <template>
@@ -428,7 +428,5 @@ div.wrapper {
 
 3. 效果
 ![查询天气测试](imgs/client-04.png)
-
-
 
 
