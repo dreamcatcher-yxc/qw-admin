@@ -22,8 +22,8 @@ spring.jpa:
   hibernate:
     ddl-auto: validate
 spring.jpa.properties.hibernate:
-  format_sql: false
-  show_sql: true
+  format_sql: true
+  show_sql: false
   dialect: com.qiwen.base.config.db.MySQL5InnoDBDialectUtf8mb4
 
 # 数据源配置
@@ -46,7 +46,7 @@ spring:
       test-while-idle: true
       test-on-borrow: false
       test-on-return: false
-      filters: stat,wall
+      filters: stat,wall,slf4j
       log-slow-sql: true
     yjyx:
       type: com.alibaba.druid.pool.DruidDataSource
@@ -106,25 +106,31 @@ spring.quartz:
     "org.quartz.jobStore.tablePrefix": QRTZ_
 
 ################################ 监控 Filter 配置 ################################
-spring.datasource.druid.web-stat-filter:
-  enabled: true
-  url-pattern: /*
-  exclusions: "/druid/*,/static/*,/webjars/*,/web-admin/*"
-  session-stat-enable: true
-  session-stat-max-count: 1000
-  principal-session-name: login-user
-  profile-enable: true
-
-
-################################ 监控 Servlet 配置 ################################
-spring.datasource.druid.stat-view-servlet:
-  enabled: true
-  url-pattern: /druid/*
-  reset-enable: true
-  login-username: admin
-  login-password: 123456
-  allow:
-  deny:
+spring.datasource.druid:
+  web-stat-filter:
+    enabled: true
+    url-pattern: /*
+    exclusions: "/druid/*,/static/*,/webjars/*,/web-admin/*"
+    session-stat-enable: true
+    session-stat-max-count: 1000
+    principal-session-name: login-user
+    profile-enable: true
+  stat-view-servlet:
+    enabled: true
+    url-pattern: /druid/*
+    reset-enable: true
+    login-username: admin
+    login-password: 123456
+    allow:
+    deny:
+  filter:
+    slf4j:
+      enabled: true
+      statement-create-after-log-enabled: false
+      statement-log-enabled: false
+      statement-executable-sql-log-enable: true
+      statement-log-error-enabled: true
+      result-set-log-enabled: false
 
 # 基础配置
 qw-global-base-dir: D:\tmp\qw-admin-server\
