@@ -77,3 +77,4 @@ qw.constant.web:
   ip2-region:
     db-path: ${qw-global-base-dir}conf/ip2region.db
     algorithm: B-tree
+  log-path: ${qw-global-base-dir}logs

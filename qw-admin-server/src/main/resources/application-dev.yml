@@ -30,6 +30,7 @@ spring.jpa.properties.hibernate:
 spring:
   datasource:
     primary:
+      name: qw-datasource
       type: com.alibaba.druid.pool.DruidDataSource
       driver-class-Name: com.mysql.jdbc.Driver
       platform: mysql
@@ -49,6 +50,7 @@ spring:
       filters: stat,wall,slf4j
       log-slow-sql: true
     yjyx:
+      name: yjyx-datasource
       type: com.alibaba.druid.pool.DruidDataSource
       driver-class-Name: com.mysql.jdbc.Driver #com.microsoft.sqlserver.jdbc.SQLServerDriver
       platform: mysql
@@ -68,6 +70,7 @@ spring:
       filters: stat,wall
       log-slow-sql: true
     quartz:
+      name: quartz-datasource
       type: com.alibaba.druid.pool.DruidDataSource
       driver-class-Name: com.mysql.jdbc.Driver
       platform: mysql

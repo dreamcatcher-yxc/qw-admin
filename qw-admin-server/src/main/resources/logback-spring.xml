@@ -3,8 +3,8 @@
     <!--定义日志文件的存储地址,勿在 LogBack 的配置中使用相对路径-->
     <!--linux:/var/log-->
     <!--win:C:/logs-->
-    <property name="APP_NAME" value="ygyx"/>
-    <springProperty scope="context" name="LOG_HOME" source="qw-global-base-dir"/>
+    <property name="APP_NAME" value="yjyx"/>
+    <springProperty scope="context" name="LOG_HOME" source="qw.constant.web.log-path"/>
     <contextName>${APP_NAME}</contextName>
 
     <!-- 控制台输出 -->
@@ -16,13 +16,13 @@
         </encoder>
     </appender>
 
-    <!-- 按照每天生成日志文件 -->
+    <!-- 正常日志 -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_HOME}/logs/${APP_NAME}.log.log</file>
+        <file>${LOG_HOME}/${APP_NAME}.log.log</file>
         <append>false</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--日志文件输出的文件名 -->
-            <FileNamePattern>${LOG_HOME}/logs/${APP_NAME}.log.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <FileNamePattern>${LOG_HOME}/${APP_NAME}.log.%d{yyyy-MM-dd}.log</FileNamePattern>
             <!--日志文件保留天数 -->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
@@ -33,12 +33,12 @@
         </encoder>
     </appender>
 
-    <!-- 按照每天生成日志文件 -->
+    <!-- 错误日志 -->
     <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_HOME}/logs/${APP_NAME}.err.log</file>
+        <file>${LOG_HOME}/${APP_NAME}.err.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--日志文件输出的文件名 -->
-            <FileNamePattern>${LOG_HOME}/logs/${APP_NAME}.err.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <FileNamePattern>${LOG_HOME}/${APP_NAME}.err.%d{yyyy-MM-dd}.log</FileNamePattern>
             <!--日志文件保留天数 -->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
@@ -52,6 +52,23 @@
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
+    </appender>
+
+    <!-- druid 日志文件 -->
+    <appender name="DRUID_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${APP_NAME}.druid.log</file>
+        <append>false</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名 -->
+            <FileNamePattern>${LOG_HOME}/${APP_NAME}.druid.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!--日志文件保留天数 -->
+            <MaxHistory>1100</MaxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} [%file:%line] - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
     </appender>
 
     <!-- 彩色日志 -->
@@ -70,22 +87,20 @@
         </encoder>
     </appender>
 
+    <!--
     <logger name="com.qiwen.yjyx.mapper" level="debug" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
-
-    <logger name="druid.sql.Statement" level="debug" additivity="false">
-        <appender-ref ref="CONSOLE"/>
-    </logger>
-
-    <logger name="druid.sql.Statement" level="debug" additivity="false">
-        <appender-ref ref="CONSOLE"/>
-    </logger>
+    -->
 
     <springProfile name="dev">
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
         </root>
+        <logger name="druid.sql.Statement" level="debug" additivity="false">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="DRUID_LOG"/>
+        </logger>
     </springProfile>
 
     <springProfile name="test,prd">
@@ -94,5 +109,8 @@
             <appender-ref ref="FILE"/>
             <appender-ref ref="ERROR"/>
         </root>
+        <logger name="druid.sql.Statement" level="debug" additivity="false">
+            <appender-ref ref="DRUID_LOG"/>
+        </logger>
     </springProfile>
 </configuration>
