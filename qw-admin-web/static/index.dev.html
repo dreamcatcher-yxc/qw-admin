@@ -2,209 +2,282 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <title>首页</title>
-    <style>
-        #loading-mask {
-            position: fixed;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 100%;
-            background: #fff;
-            user-select: none;
-            z-index: 9999;
-            overflow: hidden
-        }
+  <meta charset="utf-8">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <title>首页</title>
+  <style>
+    #loading-mask {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      background: #fff;
+      user-select: none;
+      z-index: 9999;
+      overflow: hidden
+    }
 
-        .loading-wrapper {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -100%)
-        }
+    .loading-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -100%)
+    }
 
-        .loading-dot {
-            animation: antRotate 1.2s infinite linear;
-            transform: rotate(45deg);
-            position: relative;
-            display: inline-block;
-            font-size: 64px;
-            width: 64px;
-            height: 64px;
-            box-sizing: border-box
-        }
+    .loading-dot {
+      animation: antRotate 1.2s infinite linear;
+      transform: rotate(45deg);
+      position: relative;
+      display: inline-block;
+      font-size: 64px;
+      width: 64px;
+      height: 64px;
+      box-sizing: border-box
+    }
 
-        .loading-dot i {
-            width: 22px;
-            height: 22px;
-            position: absolute;
-            display: block;
-            background-color: #1890ff;
-            border-radius: 100%;
-            transform: scale(.75);
-            transform-origin: 50% 50%;
-            opacity: .3;
-            animation: antSpinMove 1s infinite linear alternate
-        }
+    .loading-dot i {
+      width: 22px;
+      height: 22px;
+      position: absolute;
+      display: block;
+      background-color: #1890ff;
+      border-radius: 100%;
+      transform: scale(.75);
+      transform-origin: 50% 50%;
+      opacity: .3;
+      animation: antSpinMove 1s infinite linear alternate
+    }
 
-        .loading-dot i:nth-child(1) {
-            top: 0;
-            left: 0
-        }
+    .loading-dot i:nth-child(1) {
+      top: 0;
+      left: 0
+    }
 
-        .loading-dot i:nth-child(2) {
-            top: 0;
-            right: 0;
-            -webkit-animation-delay: .4s;
-            animation-delay: .4s
-        }
+    .loading-dot i:nth-child(2) {
+      top: 0;
+      right: 0;
+      -webkit-animation-delay: .4s;
+      animation-delay: .4s
+    }
 
-        .loading-dot i:nth-child(3) {
-            right: 0;
-            bottom: 0;
-            -webkit-animation-delay: .8s;
-            animation-delay: .8s
-        }
+    .loading-dot i:nth-child(3) {
+      right: 0;
+      bottom: 0;
+      -webkit-animation-delay: .8s;
+      animation-delay: .8s
+    }
 
-        .loading-dot i:nth-child(4) {
-            bottom: 0;
-            left: 0;
-            -webkit-animation-delay: 1.2s;
-            animation-delay: 1.2s
-        }
+    .loading-dot i:nth-child(4) {
+      bottom: 0;
+      left: 0;
+      -webkit-animation-delay: 1.2s;
+      animation-delay: 1.2s
+    }
 
-        @keyframes antRotate {
-            to {
-                -webkit-transform: rotate(405deg);
-                transform: rotate(405deg)
-            }
-        }
+    @keyframes antRotate {
+      to {
+        -webkit-transform: rotate(405deg);
+        transform: rotate(405deg)
+      }
+    }
 
-        @-webkit-keyframes antRotate {
-            to {
-                -webkit-transform: rotate(405deg);
-                transform: rotate(405deg)
-            }
-        }
+    @-webkit-keyframes antRotate {
+      to {
+        -webkit-transform: rotate(405deg);
+        transform: rotate(405deg)
+      }
+    }
 
-        @keyframes antSpinMove {
-            to {
-                opacity: 1
-            }
-        }
+    @keyframes antSpinMove {
+      to {
+        opacity: 1
+      }
+    }
 
-        @-webkit-keyframes antSpinMove {
-            to {
-                opacity: 1
-            }
-        }
+    @-webkit-keyframes antSpinMove {
+      to {
+        opacity: 1
+      }
+    }
 
-        body.color-weak {
-            -webkit-filter: invert(80%);
-            filter: invert(80%);
-        }
-    </style>
-    
+    body.color-weak {
+      -webkit-filter: invert(80%);
+      filter: invert(80%);
+    }
+  </style>
+
 </head>
 
 <body>
-    <div id="antd-vue-admin-root">
-        <app></app>
-        <div id="loading-mask">
-            <div class="loading-wrapper">
-                <span class="loading-dot loading-dot-spin">
-                    <i></i>
-                    <i></i>
-                    <i></i>
-                    <i></i>
-                </span>
-            </div>
-        </div>
+  <div id="antd-vue-admin-root">
+    <app></app>
+    <div id="loading-mask">
+      <div class="loading-wrapper">
+        <span class="loading-dot loading-dot-spin">
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+        </span>
+      </div>
     </div>
-    <script type="text/javascript">
-        if ('ActiveXObject' in window) {
-            var ele = document.getElementById('loading-mask');
-            ele.style.display = 'none';
-            document.write('对不起，不支持IE，请使用其他非 IE 内核浏览器访问，比如：360、Firefox、Chrome 浏览器');
-        } else {
-            window.__version__ = '1.1.1';
-            window.__env__ = 'dev';
-            window.__app__ = '/web-admin';
-            window.__server_base_url__ = '/admin';
-            window.__timeout__ = 180;
-            window.__hot_reload__ = false;
-            window.__hot_reload_server__ = 'http://localhost:8080/imserver';
+  </div>
+  <script type="text/javascript">
+    function compatibilityDetection(callback) {
+      if ('ActiveXObject' in window) {
+        var ele = document.getElementById('loading-mask');
+        ele.style.display = 'none';
+        document.write('对不起，不支持IE，请使用其他非 IE 内核浏览器访问，比如：360、Firefox、Chrome 浏览器');
+      } else {
+        window.__version__ = '1.2.0';
+        window.__env__ = 'dev';
+        window.__app__ = '/web-admin';
+        window.__server_base_url__ = '/admin';
+        window.__timeout__ = 180;
+        window.__hot_reload__ = false;
+        window.__hot_reload_server__ = 'http://localhost:8080/imserver';
+      }
+      callback && callback();
+    }
+
+    function loadScript(url, onLoad, onError) {
+      var script = document.createElement("script");  //创建一个script标签
+      script.type = "text/javascript";
+      try {
+        //IE浏览器认为script是特殊元素,不能再访问子节点;报错;
+        script.src = url;
+        script.addEventListener('load', onLoad||function() {});
+      } catch (ex) {
+        onError && onError(ex);
+      }
+      document.getElementsByTagName('head')[0].appendChild(script);
+    }
+
+    function AsyncRunner () {
+      this.tasks = [];
+    }; 
+    AsyncRunner.prototype.add = function(task) {
+      this.tasks.push(task);
+      return this
+    }
+    AsyncRunner.prototype.prepare = function() {
+      this.tasks.reverse()
+      let tnext = function() {
+        return function() {
+          // ...;
         }
-    </script>
-    <script type="text/javascript" src="/web-admin/assets/libs/requirejs/require.min.js?browser_spa_version=1.1.1"></script>
-    <!-- <script type="text/javascript" src="/web-admin/assets/libs/polyfill/polyfill.min.js?browser_spa_version=1.1.1"></script> -->
-    <script type="text/javascript" src="./require-config/index.js?browser_spa_version=1.1.1"></script>
-    <script type="text/javascript" src="./index.js?browser_spa_version=1.1.1"></script>
-    <script type="text/javascript">
-        (function(isHotReload, hotLoadServer) {
-            if(!isHotReload) {
-                return;
-            }
-            require(['vue', 'http-vue-loader', 'vue-hot-load-api'], 
-            function(Vue, loader, VueHotLoadAPI) {
-                // 安装热加载插件
-                VueHotLoadAPI.install(Vue, true);
-                var socket;
-                var userId = new Date().getTime();
+      }
+      for(let task of this.tasks) {
+          tnext = task(tnext)
+      }
+      return tnext;
+    }
+    AsyncRunner.prototype.serialRun = function() {
+      var self = this;
+      return new Promise(function(resolve) {
+        // 在末尾添加一个已完成回调
+        self.add(function(next) {
+          return function() {
+            resolve();
+            next();
+          }
+        });
+        self.prepare()();
+      });
+    }
 
-                function openSocket() {
-                    if(typeof(WebSocket) == "undefined") {
-                        console.log("您的浏览器不支持WebSocket");
-                    }else{
-                        console.log("您的浏览器支持WebSocket");
-                        //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
-                        //等同于socket = new WebSocket("ws://localhost:8888/xxxx/im/25");
-                        //var socketUrl="${request.contextPath}/im/"+$("#userId").val();
-                        var socketUrl= window.__hot_reload_server__ + '/' + userId;
-                        socketUrl=socketUrl.replace("https","ws").replace("http","ws");
-                        console.log(socketUrl);
+    function devEnvConfig(isHotReload, hotLoadServer) {
+      if (!isHotReload) {
+        return;
+      }
+      require(['vue', 'http-vue-loader', 'vue-hot-load-api'],
+        function (Vue, loader, VueHotLoadAPI) {
+          // 安装热加载插件
+          VueHotLoadAPI.install(Vue, true);
+          var socket;
+          var userId = new Date().getTime();
 
-                        if(socket!=null){
-                            socket.close();
-                            socket=null;
-                        }
-                        socket = new WebSocket(socketUrl);
-                        //打开事件
-                        socket.onopen = function() {
-                            console.log("ws: 热加载服务连接成功");
-                            //socket.send("这是来自客户端的消息" + location.href + new Date());
-                        };
-                        //获得消息事件
-                        socket.onmessage = function(msg) {
-                            //发现消息进入开始处理前端触发逻辑1
-                            console.log('ws: ' + msg.data);
-                            try {
-                                var data = JSON.parse(msg.data);
-                                if(data.name && data.name.endsWith('.vue')) {
-                                    console.log('ws: 开始重新加载' + data.name + '组件');
-                                    loader.reload(data.uniqueId, data.path, data.name);
-                                }
-                            } catch(e) {
+          function openSocket() {
+            if (typeof (WebSocket) == "undefined") {
+              console.log("您的浏览器不支持WebSocket");
+            } else {
+              console.log("您的浏览器支持WebSocket");
+              //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
+              //等同于socket = new WebSocket("ws://localhost:8888/xxxx/im/25");
+              //var socketUrl="${request.contextPath}/im/"+$("#userId").val();
+              var socketUrl = window.__hot_reload_server__ + '/' + userId;
+              socketUrl = socketUrl.replace("https", "ws").replace("http", "ws");
+              console.log(socketUrl);
 
-                            }
-                        };
-                        //关闭事件
-                        socket.onclose = function() {
-                            console.log("ws: websocket已关闭");
-                        };
-                        //发生了错误事件
-                        socket.onerror = function() {
-                            console.log("ws: websocket发生了错误");
-                        }
-                    }
+              if (socket != null) {
+                socket.close();
+                socket = null;
+              }
+              socket = new WebSocket(socketUrl);
+              //打开事件
+              socket.onopen = function () {
+                console.log("ws: 热加载服务连接成功");
+                //socket.send("这是来自客户端的消息" + location.href + new Date());
+              };
+              //获得消息事件
+              socket.onmessage = function (msg) {
+                //发现消息进入开始处理前端触发逻辑1
+                console.log('ws: ' + msg.data);
+                try {
+                  var data = JSON.parse(msg.data);
+                  if (data.name && data.name.endsWith('.vue')) {
+                    console.log('ws: 开始重新加载' + data.name + '组件');
+                    loader.reload(data.uniqueId, data.path, data.name);
+                  }
+                } catch (e) {
+
                 }
-                openSocket();
+              };
+              //关闭事件
+              socket.onclose = function () {
+                console.log("ws: websocket已关闭");
+              };
+              //发生了错误事件
+              socket.onerror = function () {
+                console.log("ws: websocket发生了错误");
+              }
+            }
+          }
+          openSocket();
+        });
+    }
+
+    compatibilityDetection(function() {
+      var scriptUrls = [
+        './assets/libs/requirejs/require.min.js',
+        './require-config/index.js',
+        './index.js'
+      ];
+
+      if(window.navigator.userAgent.indexOf('Edge') > -1) {
+        scriptUrls.splice(0, 0, './assets/libs/polyfill/polyfill.min.js')
+      }
+
+      var runner = new AsyncRunner();
+
+      scriptUrls.forEach(function(url, index) {
+        runner.add(function(next) {
+          return function() {
+            loadScript(url + '?version=' + window.__version__, function() {
+              next();
             });
-        })(window.__hot_reload__, window.__hot_reload_server__);
-    </script>
+          }
+        });
+      });
+
+      runner.serialRun()
+        .then(function() {
+          devEnvConfig(window.__hot_reload__, window.__hot_reload_server__);
+        });
+    });
+  </script>
 </body>
 
 </html>

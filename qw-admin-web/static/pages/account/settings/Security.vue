@@ -42,7 +42,7 @@ module.exports = asyncRequire([
           { 
               title: '账户密码', 
               description: '提示', 
-              value: '<span style="color:red">为了您的账户安全，建议定义更换密码</span>', 
+              value: '<span style="color:red">为了您的账户安全，建议定期更换密码</span>', 
               actions: { 
                 title: '修改',
                 callback: 'editPassword'
