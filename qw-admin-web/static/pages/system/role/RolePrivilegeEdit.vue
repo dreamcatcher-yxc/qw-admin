@@ -4,20 +4,18 @@
       title="权限分配"
       :visible="isVisible"
       :body-style="modalBodyStyle"
+      ok-text="修改"
+      cancel-text="取消"
+      @ok="handleOk"
       @cancel="handleCancel"
     >
-    <template slot="footer">
-      <a-button 
-        type="primary" 
-        @click="handleOk">
-        关闭
-      </a-button>
-    </template>
-      <a-row>
-        <a-col :span="24">
-          <role-privilege-tree :role-id="this.data.id"></role-privilege-tree>
-        </a-col>
-      </a-row>  
+      <a-spin :spinning="isLoading">
+        <a-row>
+          <a-col :span="24">
+            <role-privilege-tree ref="rpTree" :role-id="this.data.id"></role-privilege-tree>
+          </a-col>
+        </a-row>
+      </a-spin>  
     </a-modal>
   </div>
 </template>
@@ -50,7 +48,15 @@ module.exports = asyncRequire([
         this.close();
       },
       handleOk () {
-        this.close();
+        this.showLoading();
+        this.$refs.rpTree.submit()
+           .then(resp => {
+             if(!!resp) {
+               this.$message.success('角色权限信息更新成功');
+             }
+           })
+          .finally(() => this.hideLoading())
+          .then(() => this.close());
       }
     }
   });

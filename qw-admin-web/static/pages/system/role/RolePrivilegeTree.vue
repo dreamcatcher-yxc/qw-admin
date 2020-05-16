@@ -11,18 +11,23 @@ module.exports = asyncRequire([
   'mixins',
   'zTree',
   'jquery',
+  'lodash',
   'alias!@API/system/rolePrivilege',
   'alias!@PAGE/system/role/trees',
   'css!../../assets/libs/ztree/zTreeStyle/zTreeStyle.css'
-], function(MXS, _zTree, $, RpAPIS, trees, __cssText, resolve, reject) {
+], function(MXS, _zTree, $, _, RpAPIS, trees, __cssText, resolve, reject) {
   resolve({
     name: 'RolePrivilegeTree',
     mixins: [MXS.CommonMixin, MXS.AuthMixin],
     props: ['roleId'],
     data () {
       return {
-        isEdit: false,
-        editData: { }
+        // 标记当前选择的节点是否和原来的一致
+        isChanged: false,
+        // 原来选择的节点信息
+        oldPnames: [],
+        // 新选择的节点信息
+        newPnames: []
       }
     },
     computed: {
@@ -43,6 +48,7 @@ module.exports = asyncRequire([
           .then(resp => {
             let privileges = resp.sdata.allPrivileges||[];
             let pnames = resp.sdata.pnames||[];
+            this.oldPnames = pnames;
             return { privileges: privileges, pnames: pnames };
           });
       },
@@ -100,7 +106,7 @@ module.exports = asyncRequire([
 
       onHoverDom(treeId, treeNode) {
         var $sObj = $('#' + treeNode.tId + '_a');
-        var title = '';
+        var title = '键值: \r\n\t' + treeNode.key + '\r\n';
         var urls = treeNode.urls;
         var description = treeNode.description;
         if(!!urls && urls.trim() != '') {
@@ -122,26 +128,17 @@ module.exports = asyncRequire([
         for(var i = 0; i < checkedNodes.length; i++) {
             var tNode = checkedNodes[i];
             if(!tNode.isParent) {
-                tArr.push(tNode.key);
+              tArr.push(tNode.key);
             }
         }
-        var privilegeNames = tArr.join(',');
-
-        if(!this.roleId) {
-            return;
+        
+        this.isChanged = !((this.oldPnames.length === tArr.length) && (_.intersection(this.oldPnames, tArr).length === tArr.length));
+  
+        if(this.isChanged) {
+          this.newPnames = tArr;
+        } else {
+          this.newPnames = [];
         }
-
-        var formData = {
-            roleId : this.roleId,
-            pnames : privilegeNames
-        };
-
-        this.showLoading();
-        RpAPIS.editRps(formData)
-          .then(resp => {
-            this.$message.success('角色权限信息更新成功');
-          })
-          .finally(resp => this.hideLoading());
       },
 
       checkNodeByNames(pnames) {
@@ -185,6 +182,22 @@ module.exports = asyncRequire([
           .then(menus => this.initTree(menus))
           .finally(() => this.hideLoading());
       },
+
+      /**
+       * 提交修改的信息
+       */
+      submit() {
+        if(!this.roleId || !this.isChanged) {
+            return Promise.resolve(false);
+        }
+
+        let formData = {
+            roleId : this.roleId,
+            pnames : this.newPnames.join(',')
+        };
+
+        return RpAPIS.editRps(formData);
+      }
     }
   });
 });

@@ -79,7 +79,7 @@ public class ShiroConfig {
      */
     @SneakyThrows
     @Bean
-    public FilterRegistrationBean shirFilter(SecurityManager securityManager) {
+    public FilterRegistrationBean shiroFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         // 由于系统中所有的权限拦截已经通过 SpringMVC interceptor 拦截实现了, 这里将所有的请求交给 anno 处理,

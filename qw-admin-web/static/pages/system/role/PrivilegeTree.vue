@@ -103,7 +103,7 @@ module.exports = asyncRequire([
 
       onHoverDom(treeId, treeNode) {
         var $sObj = $('#' + treeNode.tId + '_a');
-        var title = '';
+        var title = '键值: \r\n\t' + treeNode.key + '\r\n';
         var urls = treeNode.urls;
         var description = treeNode.description;
         if(!!urls && urls.trim() != '') {

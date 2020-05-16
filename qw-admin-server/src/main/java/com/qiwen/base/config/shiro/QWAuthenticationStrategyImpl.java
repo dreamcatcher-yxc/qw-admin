@@ -41,9 +41,9 @@ public class QWAuthenticationStrategyImpl implements AuthenticationStrategy {
             return singleRealmInfo;
         }
         if(singleRealmInfo != null && aggregateInfo instanceof SimpleAuthenticationInfo) {
-            SimpleAuthenticationInfo mergeableAutenticationInfo = (SimpleAuthenticationInfo) aggregateInfo;
-            mergeableAutenticationInfo.merge(singleRealmInfo);
-            return mergeableAutenticationInfo;
+            SimpleAuthenticationInfo mergeableAuthenticationInfo = (SimpleAuthenticationInfo) aggregateInfo;
+            mergeableAuthenticationInfo.merge(singleRealmInfo);
+            return mergeableAuthenticationInfo;
         }
         return aggregateInfo;
     }

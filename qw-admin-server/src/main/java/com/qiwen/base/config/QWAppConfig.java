@@ -75,4 +75,6 @@ public class QWAppConfig {
     // ip2Region 相关配置
     private Ip2Region ip2Region;
 
+    // 日志文件存储路径
+    private String logPath;
 }
