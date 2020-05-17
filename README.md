@@ -30,9 +30,11 @@
 
 # 三、安装教程
 
-[快速启动教程](./doc/quickly-start.md)
+[快速启动教程](./doc/quickly-start.md)。
 
-# 四、使用说明
+- 在线体验地址：[http://47.98.97.212:9096/web-admin/index.html](http://47.98.97.212:9096/web-admin/index.html) 
+  - 登录账号/密码: test1/123456
+  - Druid 监控登录账号/密码: qw-admin/123456
 
 ## 1、后端
 
