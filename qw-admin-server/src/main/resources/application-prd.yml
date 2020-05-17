@@ -1,7 +1,7 @@
 server:
   port: 443
   tomcat:
-    basedir: ${qw-global-base-dir}\tomcat
+    basedir: ${qw-global-base-dir}tomcat
     accesslog:
       enabled: false
 
