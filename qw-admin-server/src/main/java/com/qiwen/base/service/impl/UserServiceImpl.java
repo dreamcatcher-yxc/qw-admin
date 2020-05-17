@@ -8,6 +8,7 @@ import com.qiwen.base.repository.UserRoleRepository;
 import com.qiwen.base.service.IFileMapService;
 import com.qiwen.base.service.IUserService;
 import com.qiwen.base.util.NameImgUtil;
+import com.qiwen.base.util.StringUtil;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -236,13 +237,15 @@ public class UserServiceImpl implements IUserService {
         String header = user.getHeader();
         String needDeleteImgId =  null;
 
-        if(fileMapService.isTempFile(header)) {
-            Path tempFilePath = fileMapService.findTempFile(header);
-            FileMap fm = fileMapService.save(null, tempFilePath);
-            needDeleteImgId = realUser.getHeader();
-            realUser.setHeader(fm.getFileId());
-        } else {
-            realUser.setHeader(user.getHeader());
+        if(StringUtils.isNotEmpty(header)) {
+            if(fileMapService.isTempFile(header)) {
+                Path tempFilePath = fileMapService.findTempFile(header);
+                FileMap fm = fileMapService.save(null, tempFilePath);
+                needDeleteImgId = realUser.getHeader();
+                realUser.setHeader(fm.getFileId());
+            } else {
+                realUser.setHeader(user.getHeader());
+            }
         }
 
         if(!onlyChangeHeader) {
