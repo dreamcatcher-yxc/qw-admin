@@ -22,8 +22,8 @@ spring.jpa:
   hibernate:
     ddl-auto: validate
 spring.jpa.properties.hibernate:
-  format_sql: false
-  show_sql: true
+  format_sql: true
+  show_sql: false
   dialect: com.qiwen.base.config.db.MySQL5InnoDBDialectUtf8mb4
 
 # 数据源配置
@@ -34,7 +34,7 @@ spring:
       type: com.alibaba.druid.pool.DruidDataSource
       driver-class-Name: com.mysql.jdbc.Driver
       platform: mysql
-      url: jdbc:mysql://127.0.0.1:3306/db_yjyx?useSSL=false&characterEncoding=utf-8&autoReconnect=true
+      url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&characterEncoding=utf-8&autoReconnect=true
       username: root
       password: root
       initial-size: 5
@@ -43,7 +43,7 @@ spring:
       max-wait: 60000
       time-between-eviction-runs-Millis: 60000
       min-evictable-idle-time-millis: 300000
-      validation-query: SELECT1FROMDUAL
+      validation-query: SELECT 1
       test-while-idle: true
       test-on-borrow: false
       test-on-return: false
@@ -52,7 +52,7 @@ spring:
     yjyx:
       name: yjyx-datasource
       type: com.alibaba.druid.pool.DruidDataSource
-      driver-class-Name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      driver-class-Name: com.mysql.jdbc.Driver #com.microsoft.sqlserver.jdbc.SQLServerDriver
       platform: mysql
       url: jdbc:mysql://127.0.0.1:3306/test2?useSSL=false&characterEncoding=utf-8&autoReconnect=true
       username: root
@@ -63,11 +63,11 @@ spring:
       max-wait: 60000
       time-between-eviction-runs-Millis: 60000
       min-evictable-idle-time-millis: 300000
-      validation-query: SELECT1FROMDUAL
+      validation-query: SELECT 1
       test-while-idle: true
       test-on-borrow: false
       test-on-return: false
-      filters: stat,wall,slf4j
+      filters: stat,wall
       log-slow-sql: true
     quartz:
       name: quartz-datasource
