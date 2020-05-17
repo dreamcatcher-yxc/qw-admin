@@ -1,6 +1,7 @@
 <template>
   <div>
-    <a-modal 
+    <a-modal
+      v-if="canBeModify"
       title="权限分配"
       :visible="isVisible"
       :body-style="modalBodyStyle"
@@ -12,7 +13,31 @@
       <a-spin :spinning="isLoading">
         <a-row>
           <a-col :span="24">
-            <role-privilege-tree ref="rpTree" :role-id="this.data.id"></role-privilege-tree>
+            <role-privilege-tree ref="rpTree" :role-id="this.data.id" :can-be-modify="canBeModify"></role-privilege-tree>
+          </a-col>
+        </a-row>
+      </a-spin>  
+    </a-modal>
+
+    <a-modal
+      v-else
+      title="权限分配"
+      :visible="isVisible"
+      :body-style="modalBodyStyle"
+      cancel-text="取消"
+      @cancel="handleCancel"
+    >
+      <template slot="footer">
+        <a-button 
+          type="primary"
+          @click="handleCancel">
+          关闭
+        </a-button>
+      </template>
+      <a-spin :spinning="isLoading">
+        <a-row>
+          <a-col :span="24">
+            <role-privilege-tree ref="rpTree" :role-id="this.data.id" :can-be-modify="canBeModify"></role-privilege-tree>
           </a-col>
         </a-row>
       </a-spin>  
@@ -26,7 +51,7 @@ module.exports = asyncRequire([
 ], function(MXS, resolve, reject) {
   resolve({
     name: 'RolePrivilegeEdit',
-    mixins: [MXS.CommonMixin, MXS.ModalMixin],
+    mixins: [MXS.CommonMixin, MXS.ModalMixin,  MXS.AuthMixin],
     components: {
       RolePrivilegeTree: load('./RolePrivilegeTree')
     },
@@ -37,11 +62,16 @@ module.exports = asyncRequire([
           border: 'none',
           maxHeight: '500px',
           overflowY: 'scroll'
-        },
-        roleTypes: []
+        }
+      }
+    },
+    computed: {
+      canBeModify () {
+        return this.$$hasAuth('role-assign-privilege');
       }
     },
     mounted () {
+      this.$$fetchAuth();
     },
     methods: {
       handleCancel () {

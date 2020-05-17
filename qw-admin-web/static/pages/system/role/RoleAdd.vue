@@ -34,26 +34,6 @@
           />
         </a-form-item>
         
-        <a-form-item v-bind="formItemLayout" label="类型">
-          <a-select
-            v-decorator="[
-              'type',
-              {
-                rules: [
-                  {
-                    required: true,
-                    message: '类型不能为空!',
-                  }
-                ]
-              }
-            ]"
-          >
-            <a-select-option v-for="item,index in roleTypes" :key="index" :value="item.key">
-              {{ item.value }}
-            </a-select-option>
-          </a-select>
-        </a-form-item>
-
         <a-form-item v-bind="formItemLayout" label="描述">
           <a-textarea 
             placeholder="描述信息" 
@@ -87,8 +67,7 @@ module.exports = asyncRequire([
             xs: { span: 24 },
             sm: { span: 20 },
           }
-        },
-        roleTypes: []
+        }
       }
     },
     created () {
@@ -107,12 +86,7 @@ module.exports = asyncRequire([
       });
     },
     mounted () {
-      // 初始化可选的角色类型信息
-      RoleAPIS.queryRoleTypes()
-        .then(data => {
-          let roleTypes = data.sdata.types;
-          roleTypes.forEach(item => this.roleTypes.push(item));
-        });
+      // ...
     },
     methods: {
       handleSubmit (e) {

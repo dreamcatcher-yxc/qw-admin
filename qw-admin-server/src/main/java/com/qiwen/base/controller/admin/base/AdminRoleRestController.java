@@ -66,7 +66,7 @@ public class AdminRoleRestController {
         return Result.ok().json();
     }
 
-    @Desc(value = "r-查询角色拥有的权限信息", name = "role-assign-privilege")
+    @Desc(value = "r-查询角色拥有的权限信息", name = "role-privilege-list")
     @GetMapping("/find/privileges/{roleId}")
     public String findPrivilegesByRoleId(@PathVariable Long roleId) {
         List<Privilege> allPrivileges = privilegeService.findAll();

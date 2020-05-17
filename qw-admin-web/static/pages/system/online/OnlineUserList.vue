@@ -30,13 +30,14 @@
       </div>
       <div class="operator">
         <a-button v-if="$$hasAuth('online-user-delete')" @click="deleteLog" type="danger">踢出</a-button>
-        <span style="float: right; margin-top: 3px;">
+        <div style="float: right; margin-top: 3px;">
           <a-button @click="init()">刷新</a-button>
           <qw-column-selector 
             :src-columns="columns"
             @change="(selectedColumns) => this.replaceArrayByArray('selectedColumns', selectedColumns)">
           </qw-column-selector>
-        </span>
+        </div>
+        <div style="clear: both;"></div>
       </div>
       <qw-table
         :columns="selectedColumns"

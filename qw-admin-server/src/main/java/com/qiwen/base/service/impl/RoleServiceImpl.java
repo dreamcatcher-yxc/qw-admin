@@ -41,6 +41,7 @@ public class RoleServiceImpl implements IRoleService {
     @Transactional
     @Override
     public void save(Role role) {
+        role.setType("admin");
         roleRepo.save(role);
     }
 
@@ -203,6 +204,7 @@ public class RoleServiceImpl implements IRoleService {
     @Transactional
     @Override
     public void modifyById(Role role) {
+        role.setType("admin");
         Optional<Role> realRole = roleRepo.findById(role.getId());
         realRole.ifPresent(tr -> {
             tr.setName(role.getName());

@@ -42,7 +42,6 @@ define([
         /**
          * 新增角色
          * @param {*} form.name 角色名
-         * @param {*} form.type 类型
          * @param {*} form.description 性别 
          */
         addRole: function(form) {
@@ -67,7 +66,6 @@ define([
         /**
          * 修改角色信息
          * @param {*} form.name
-         * @param {*} form.type
          * @param {*} form.description
          */
         editRole: function(form) {

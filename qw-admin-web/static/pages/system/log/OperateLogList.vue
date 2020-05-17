@@ -96,6 +96,7 @@
             @change="(selectedColumns) => this.replaceArrayByArray('selectedColumns', selectedColumns)">
           </qw-column-selector>
         </span>
+        <div style="clear: both;"></div>
       </div>
       <qw-table
         :columns="selectedColumns"

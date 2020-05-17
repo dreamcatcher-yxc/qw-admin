@@ -19,7 +19,7 @@ module.exports = asyncRequire([
   resolve({
     name: 'RolePrivilegeTree',
     mixins: [MXS.CommonMixin, MXS.AuthMixin],
-    props: ['roleId'],
+    props: ['roleId', 'canBeModify'],
     data () {
       return {
         // 标记当前选择的节点是否和原来的一致
@@ -30,17 +30,8 @@ module.exports = asyncRequire([
         newPnames: []
       }
     },
-    computed: {
-      canBeChecked () {
-        return this.$$hasAuth('role-assign-privilege');
-      }
-    },
     mounted () {
-      this.$$fetchAuth([
-        'role-assign-privilege'
-      ]).then(() => {
-        this.init();
-      });
+      this.init();
     },
     methods: {
       fetchPrivilegeData () {
@@ -68,7 +59,7 @@ module.exports = asyncRequire([
               name : n.description,
               urls : n.urls,
               description : n.description,
-              chkDisabled: !this.canBeChecked
+              chkDisabled: !this.canBeModify
           };
         });
         var zTree = undefined;
