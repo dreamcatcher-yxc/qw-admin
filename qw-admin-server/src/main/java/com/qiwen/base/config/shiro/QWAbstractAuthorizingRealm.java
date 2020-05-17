@@ -5,7 +5,9 @@ import com.qiwen.base.entity.Privilege;
 import com.qiwen.base.entity.Role;
 import com.qiwen.base.entity.User;
 import com.qiwen.base.service.*;
+import com.qiwen.base.util.SpringHelper;
 import com.qiwen.base.vo.LoginLogVO;
+import com.qiwen.base.vo.LoginUserVO;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -43,17 +45,21 @@ public abstract class QWAbstractAuthorizingRealm extends AuthorizingRealm {
 
     protected final QWAppConfig appConfig;
 
+    protected final ISessionManagerService sessionManagerService;
+
     public QWAbstractAuthorizingRealm(IUserService userService,
                                       IRoleService roleService,
                                       IPrivilegeService privilegeService,
                                       IAuthService authService,
                                       ILoginLogService loginLogService,
+                                      ISessionManagerService sessionManagerService,
                                       QWAppConfig appConfig) {
         this.userService = userService;
         this.roleService = roleService;
         this.privilegeService = privilegeService;
         this.authService = authService;
         this.loginLogService = loginLogService;
+        this.sessionManagerService = sessionManagerService;
         this.appConfig = appConfig;
     }
 
@@ -167,4 +173,21 @@ public abstract class QWAbstractAuthorizingRealm extends AuthorizingRealm {
         loginLogService.save(loginLogVO);
     }
 
+    /**
+     * 查询所有特定在线用户的 session
+     * @param userId
+     * @return
+     */
+    protected List<Session> queryOnlineUserSessionByUserId(final Long userId) {
+        QWAppConfig appConfig = SpringHelper.getRealBean(QWAppConfig.class);
+        final String loginUserKey = appConfig.getLoginUserKey();
+        List<Session> sessions = this.sessionManagerService.findSessions(session -> {
+            Object tObj = session.getAttribute(loginUserKey);
+            if(tObj instanceof LoginUserVO) {
+                return userId.equals(((LoginUserVO)tObj).getId());
+            }
+            return false;
+        });
+        return sessions;
+    }
 }

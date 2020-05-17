@@ -150,6 +150,7 @@ qw.constant.web:
       resource-locations:
         - file:D:/data/YGWL_COMPANY/qw-admin/qw-admin-web/static/
       cache-control-bean-name: yjyxDefaultCacheControlBean
+  max-login-quantity-of-same-user: 2
 
 # 新增模块配置
 yjyx:

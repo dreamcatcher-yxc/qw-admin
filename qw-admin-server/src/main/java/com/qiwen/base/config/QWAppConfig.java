@@ -77,4 +77,7 @@ public class QWAppConfig {
 
     // 日志文件存储路径
     private String logPath;
+
+    // 同一用户同时在线数量, -1 表示不限制
+    private int maxLoginQuantityOfSameUser = 1;
 }

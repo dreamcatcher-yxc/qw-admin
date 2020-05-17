@@ -3,10 +3,7 @@ package com.qiwen.base.config.shiro;
 import com.qiwen.base.config.QWAppConfig;
 import com.qiwen.base.entity.User;
 import com.qiwen.base.service.*;
-import com.qiwen.base.util.LoginUtil;
-import com.qiwen.base.util.ReflectUtil;
-import com.qiwen.base.util.Result;
-import com.qiwen.base.util.SystemUtil;
+import com.qiwen.base.util.*;
 import com.qiwen.base.util.http.HttpUtil;
 import com.qiwen.base.vo.LoginUserVO;
 import org.apache.shiro.SecurityUtils;
@@ -20,9 +17,8 @@ import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
-
-import static com.qiwen.base.util.SystemUtil.checkUserIsLoginByUserId;
 
 @Component
 public class QWAutoLoginRealm extends QWAbstractAuthorizingRealm {
@@ -43,7 +39,14 @@ public class QWAutoLoginRealm extends QWAbstractAuthorizingRealm {
                             ILoginLogService loginLogService,
                             IForceOfflineUserService forceOfflineUserService,
                             QWAppConfig appConfig) {
-        super(userService, roleService, privilegeService, authService, loginLogService, appConfig);
+
+        super(userService,
+                roleService,
+                privilegeService,
+                authService,
+                loginLogService,
+                SpringHelper.getLazyBean(ISessionManagerService.class),
+                appConfig);
         this.forceOfflineUserService = forceOfflineUserService;
     }
 
@@ -115,13 +118,21 @@ public class QWAutoLoginRealm extends QWAbstractAuthorizingRealm {
                 request.setAttribute(LOGIN_RESULT_KEY, Result.ok(message).put("flag", flag));
                 throw new AccountException(message);
             }
-            // 该登录用户未在系统中处于登录状态
-            if (checkUserIsLoginByUserId(loginUserVO.getId()) != null) {
-                message = "已在其他设备登录";
-                flag = 2;
-                request.setAttribute(LOGIN_RESULT_KEY, Result.ok(message).put("flag", flag));
-                throw new ExcessiveAttemptsException("已在其他设备登录");
+
+            // 检测是否超过允许登录的最大数量
+            int maxLoginQuantity = appConfig.getMaxLoginQuantityOfSameUser();
+            if(maxLoginQuantity > 0) {
+                List<Session> sessions = queryOnlineUserSessionByUserId(loginUserVO.getId());
+                int needKillSessionSize = sessions.size() + 1 - maxLoginQuantity;
+                // 超出大小, 从最早访问的 session 开始删除
+                if(needKillSessionSize > 0) {
+                    message = "已在其他设备登录";
+                    flag = 2;
+                    request.setAttribute(LOGIN_RESULT_KEY, Result.ok(message).put("flag", flag));
+                    throw new ExcessiveAttemptsException("已在其他设备登录");
+                }
             }
+
             // 保存登录信息
             message = "自动登录成功";
             flag = 1;

@@ -3,10 +3,7 @@ package com.qiwen.base.config.shiro;
 import com.qiwen.base.config.QWAppConfig;
 import com.qiwen.base.entity.User;
 import com.qiwen.base.service.*;
-import com.qiwen.base.util.LoginUtil;
-import com.qiwen.base.util.PasswordUtil;
-import com.qiwen.base.util.ReflectUtil;
-import com.qiwen.base.util.Result;
+import com.qiwen.base.util.*;
 import com.qiwen.base.util.http.HttpUtil;
 import com.qiwen.base.vo.LoginUserVO;
 import org.apache.commons.lang.StringUtils;
@@ -23,9 +20,8 @@ import org.springframework.util.CollectionUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
-
-import static com.qiwen.base.util.SystemUtil.checkUserIsLoginByUserId;
 
 @Component
 public class QWAuthRealm extends QWAbstractAuthorizingRealm {
@@ -44,7 +40,13 @@ public class QWAuthRealm extends QWAbstractAuthorizingRealm {
                        IForceOfflineUserService forceOfflineUserService,
                        QWAppConfig appConfig
                        ) {
-        super(userService, roleService, privilegeService, authService, loginLogService, appConfig);
+        super(userService,
+                roleService,
+                privilegeService,
+                authService,
+                loginLogService,
+                SpringHelper.getLazyBean(ISessionManagerService.class),
+                appConfig);
         this.forceOfflineUserService = forceOfflineUserService;
     }
 
@@ -105,12 +107,17 @@ public class QWAuthRealm extends QWAbstractAuthorizingRealm {
         }
 
         // 保存登录信息至 session
-        Session srcSession = checkUserIsLoginByUserId(loginUserVO.getId());
         String message = null;
-        if(srcSession != null) {
-            srcSession.removeAttribute(appConfig.getLoginUserKey());
-            srcSession.stop();
-            message = String.format("【%s】原登录机器已经下线!", username);
+        int maxLoginQuantity = appConfig.getMaxLoginQuantityOfSameUser();
+        if(maxLoginQuantity > 0) {
+            List<Session> sessions = queryOnlineUserSessionByUserId(loginUserVO.getId());
+            int needKillSessionSize = sessions.size() + 1 - maxLoginQuantity;
+            // 超出大小, 从最早访问的 session 开始删除
+            if(needKillSessionSize > 0) {
+                sessions.sort((s1, s2) -> s1.getLastAccessTime().getTime() <= s2.getLastAccessTime().getTime() ? -1 : 1);
+                sessions.subList(0, needKillSessionSize).forEach(Session::stop);
+                this.sessionManagerService.validateSessions();
+            }
         }
 
         // 如果当前用户之前都强制下线, 则删除

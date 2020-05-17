@@ -78,3 +78,4 @@ qw.constant.web:
     db-path: ${qw-global-base-dir}conf/ip2region.db
     algorithm: B-tree
   log-path: ${qw-global-base-dir}logs
+  max-login-quantity-of-same-user: 1
