@@ -241,6 +241,8 @@ public class UserServiceImpl implements IUserService {
             FileMap fm = fileMapService.save(null, tempFilePath);
             needDeleteImgId = realUser.getHeader();
             realUser.setHeader(fm.getFileId());
+        } else {
+            realUser.setHeader(user.getHeader());
         }
 
         if(!onlyChangeHeader) {

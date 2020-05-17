@@ -1,7 +1,7 @@
 <template>
   <a-dropdown style="display: inline-block; height: 100%; vertical-align: initial" >
     <span style="cursor: pointer">
-      <a-avatar class="avatar" size="small" shape="circle" :src="currUser.avatar"></a-avatar>
+      <a-avatar class="avatar" size="small" shape="circle" :src="avatar"></a-avatar>
       <span>{{currUser.name}}</span>
     </span>
     <a-menu style="width: 150px" slot="overlay" @click="handler">
@@ -33,6 +33,9 @@ module.exports = asyncRequire([
     computed: {
       currUser () {
         return this.$store.state.account.user;
+      },
+      avatar () {
+        return this.$store.getters['account/avatar'];
       }
     },
     mounted () {

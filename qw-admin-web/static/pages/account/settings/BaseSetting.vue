@@ -210,6 +210,7 @@ module.exports = asyncRequire([
       setavatar (rdata) {
         if(rdata.$hook) {
           this.initUserData();
+          this.$store.dispatch('account/fetchUserInfo');
         }
       },
       handleSubmit (e) {

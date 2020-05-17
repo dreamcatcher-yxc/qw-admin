@@ -8,6 +8,7 @@ import com.qiwen.base.service.IFileMapService;
 import com.qiwen.base.service.IWorkLogService;
 import com.qiwen.base.util.FileUtil;
 import com.qiwen.base.util.QueryDSLUtil;
+import com.qiwen.base.util.ReflectUtil;
 import com.qiwen.base.util.SpringHelper;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -62,9 +63,15 @@ public class FileMapClearJob implements Job {
             Page<FileMap> result = QueryDSLUtil.page(query, PageRequest.of(base * 1000, ++base * 1000));
             fms = result.getContent();
 
-            // 过滤掉引用文件
             List<FileMap> notLinkFms = fms.stream()
+                    // 过滤掉引用文件
                     .filter(fm -> fm.getIsLink() != 1)
+                    .map(fm -> {
+                        FileMap cloneFm = ReflectUtil.O2ObySameField(fm, FileMap.class);
+                        String path = cloneFm.getPath();
+                        cloneFm.setPath(FileUtil.combination(appConfig.getFileSaveDir(), path));
+                        return cloneFm;
+                    })
                     .collect(Collectors.toList());
 
             // 去除无效文件，既数据库中存在该文件，但是该文件在磁盘上不存在。

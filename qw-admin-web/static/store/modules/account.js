@@ -27,6 +27,9 @@ define([
           },
           username (state) {
             return state.user.username;
+          },
+          avatar (state) {
+            return state.user.avatar;
           }
         },
         actions: {

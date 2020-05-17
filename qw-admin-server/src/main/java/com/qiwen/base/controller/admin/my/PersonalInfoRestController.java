@@ -72,7 +72,7 @@ public class PersonalInfoRestController {
     @RequiresUser
     @Desc(log = "修改头像")
     @PostMapping("/modify/header")
-    public String upload(User user) {
+    public String modifyHeader(User user) {
         user.setId(SystemUtil.getUserID());
         userService.modifyPersonalInfoById(user, true);
         reloadCurrentLoginUserInfo();
