@@ -3,7 +3,7 @@ server:
   tomcat:
     basedir: ${qw-global-base-dir}\tomcat
     accesslog:
-      :enabled: false
+      enabled: false
 
 ## thymleaf 相关配置
 spring.thymeleaf:

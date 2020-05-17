@@ -33,6 +33,6 @@ public class QWConstant {
     public static final String MODULE_GROUP_NAME_DESC = "基础权限 > ";
 
     // 配置数据表名前缀
-    public static final String DB_TABLE_PREFIX = "sys";
+    public static final String DB_TABLE_PREFIX = "SYS";
 
 }
