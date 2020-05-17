@@ -47,7 +47,7 @@ spring:
       test-while-idle: true
       test-on-borrow: false
       test-on-return: false
-      filters: stat,wall,log4j
+      filters: stat,wall,slf4j
       log-slow-sql: true
     yjyx:
       name: yjyx-datasource
@@ -67,7 +67,7 @@ spring:
       test-while-idle: true
       test-on-borrow: false
       test-on-return: false
-      filters: stat,wall,log4j
+      filters: stat,wall,slf4j
       log-slow-sql: true
     quartz:
       name: quartz-datasource
@@ -140,4 +140,4 @@ yjyx:
   foo-val2: fooVal2-prd
 
 # 基础配置
-qw-global-base-dir: F:\yjyx-data\
+qw-global-base-dir: D:\tmp\qw-admin-server\
