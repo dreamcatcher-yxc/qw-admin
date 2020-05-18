@@ -167,7 +167,8 @@ module.exports = asyncRequire([
       },
 
       onMenuSelect (key, target) {
-        let pageKey = this.getPageKey(target);
+        let $ele = this.jQuery(target);
+        let pageKey = $ele.attr('pagekey') || $ele.find('span[pagekey]').attr('pagekey');
         switch (key) {
           case '1':
             this.closeLeft(pageKey);
