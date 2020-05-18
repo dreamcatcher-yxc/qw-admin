@@ -84,7 +84,7 @@ public class AdminUserRestController {
             });
             // 该用户已经登录系统, 则踢出
             if(!CollectionUtils.isEmpty(sessions)) {
-                sessions.get(0).stop();
+                sessions.forEach(Session::stop);
                 // 主动刷新 session
                 sessionManagerService.validateSessions();
                 return Result.ok("该用户已禁用, 已踢出系统").json();
