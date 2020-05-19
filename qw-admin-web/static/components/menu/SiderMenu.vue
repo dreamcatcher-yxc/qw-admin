@@ -63,7 +63,9 @@ module.exports = asyncRequire([
             return this.$store.state.setting.systemName
         },
         siderStyle () {
-          return {}
+          return {
+            zIndex: '110'
+          }
         }
     },
     methods: {
