@@ -55,6 +55,7 @@ define([
           default: false
         }
       },
+
       data: function() {
         return {
           openKeys: [],
@@ -62,21 +63,7 @@ define([
           cachedOpenKeys: []
         }
       },
-      computed: {
-        rootSubmenuKeys: function(vm) {
-          let keys = []
-          vm.menuData.forEach(item => {
-            keys.push(item.path)
-          });
-          return keys;
-        }
-      },
-      created: function() {
-        this.updateMenu();
-      },
-      mounted: function() {
-        this.jQuery('#loading-mask').remove();
-      },
+
       watch: {
         collapsed: function(val) {
           if (val) {
@@ -87,11 +74,37 @@ define([
           }
         },
         '$route': function () {
-          this.updateMenu()
+          this.updateMenu();
+        },
+        menuData: function(to) {
+          if(to && to.length > 0) {
+            setTimeout(function() {
+              this.updateMenu();
+            }, 300);
+          }
         }
       },
+
+      computed: {
+        rootSubmenuKeys: function(vm) {
+          let keys = []
+          vm.menuData.forEach(item => {
+            keys.push(item.path)
+          });
+          return keys;
+        }
+      },
+
+      created: function() {
+        this.updateMenu();
+      },
+
+      mounted: function() {
+        this.jQuery('#loading-mask').remove();
+      },
+
       methods: {
-        renderIcon: function (h, icon) {
+        renderIcon: function(h, icon) {
           return icon === 'none' ? null
             : h(
               Icon,
@@ -99,7 +112,7 @@ define([
                 props: {type: icon !== undefined ? icon : iconArr[Math.floor((Math.random() * iconArr.length))]}
               })
         },
-        renderMenuItem: function (h, menu, pIndex, index) {
+        renderMenuItem: function(h, menu, pIndex, index) {
           var contents = [h('span', [menu.name])];
           if(menu.icon) {
             contents.splice(0, 0, this.renderIcon(h, menu.icon));
@@ -118,7 +131,7 @@ define([
             ]
           )
         },
-        renderSubMenu: function (h, menu, pIndex, index) {
+        renderSubMenu: function(h, menu, pIndex, index) {
           var this2_ = this;
           var subItem = [h('span',
             {slot: 'title'},
@@ -138,12 +151,14 @@ define([
             subItem.concat(itemArr)
           )
         },
-        renderItem: function (h, menu, pIndex, index) {
+
+        renderItem: function(h, menu, pIndex, index) {
           if (!menu.invisible) {
             return menu.children ? this.renderSubMenu(h, menu, pIndex, index) : this.renderMenuItem(h, menu, pIndex, index);
           }
         },
-        renderMenu: function (h, menuTree) {
+
+        renderMenu: function(h, menuTree) {
           // debugger;
           var this2_ = this
           var menuArr = []
@@ -152,7 +167,8 @@ define([
           })
           return menuArr
         },
-        onOpenChange (openKeys) {
+
+        onOpenChange: function(openKeys) {
           const latestOpenKey = openKeys.find(key => this.openKeys.indexOf(key) === -1)
           if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
             this.openKeys = openKeys;
@@ -160,7 +176,8 @@ define([
             this.openKeys = latestOpenKey ? [latestOpenKey] : [];
           }
         },
-        findMenuMetaDataByPath (path, menuData) {
+
+        findMenuMetaDataByPath: function(path, menuData) {
           for(var i = 0; !!menuData && i < menuData.length; i++) {
             var metaData = menuData[i];
             if(metaData.path === path) {
@@ -173,24 +190,30 @@ define([
           }
           return null;
         },
-        updateMenu () {
+
+        updateMenu: function() {
           var routes = this.$route.matched.concat();
           this.selectedKeys = [routes.pop().path];
           var selectKeyMetaData = this.findMenuMetaDataByPath(this.selectedKeys[0], this.menuData);
+          
           if(!selectKeyMetaData) {
             return;
           }
+
           let openKeys = [];
           while(!!selectKeyMetaData && !!selectKeyMetaData.parent) {
             openKeys.push(selectKeyMetaData.parent.path);
             selectKeyMetaData = selectKeyMetaData.parent;
           }
-          // routes.forEach((item) => {
-          //   openKeys.push(item.path);
-          // })
-          this.collapsed || this.mode === 'horizontal' ? this.cachedOpenKeys = openKeys : this.openKeys = openKeys;
+
+          if(this.collapsed || this.mode === 'horizontal') {
+            this.cachedOpenKeys = openKeys
+          } else {
+            this.openKeys = openKeys;
+          }
         }
       },
+
       render: function(h) {
         return h(
           Menu,
