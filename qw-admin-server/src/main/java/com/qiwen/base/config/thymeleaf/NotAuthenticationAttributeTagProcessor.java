@@ -53,6 +53,7 @@ public class NotAuthenticationAttributeTagProcessor extends AbstractAttributeTag
             // 有权限访问, 该标签内的所有内容将会不显示
             Subject subject = SecurityUtils.getSubject();
             boolean hasPermission = subject.isPermitted(new QWExpressionPermission(attributeValue, true));
+
             if(hasPermission) {
                 structureHandler.removeElement();
             } else {
