@@ -134,9 +134,19 @@ define([
                   menuName: '登录日志管理'
                 },
                 component: load('@PAGE/system/log/LoginLogList')
-              }
+              },
+              // 缓存管理
+              {
+                path: '/system/cache/index',
+                name: 'cache-admin',
+                meta: {
+                  menuName: '缓存管理'
+                },
+                component: load('@PAGE/system/cache/CacheList')
+              },
             ]
           },
+          // 测试菜单
           {
             path: '/test',
             redirect: '/test/test1',

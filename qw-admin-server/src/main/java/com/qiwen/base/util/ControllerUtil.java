@@ -8,9 +8,7 @@ import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Array;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 /**
@@ -31,6 +29,21 @@ public class ControllerUtil {
      */
     public static <T> T[]  splitStr2Array(String str, Function<String, T> converter) {
         return splitStr2Array(str, null, converter);
+    }
+
+    /**
+     *  字符串转集合
+     * @param str
+     * @param converter
+     * @param <T>
+     * @return
+     */
+    public static <T> List<T> splitStr2List(String str, Function<String, T> converter) {
+        T[] arr = splitStr2Array(str, null, converter);
+        if(arr == null) {
+            return null;
+        }
+        return Arrays.asList(arr);
     }
 
     /**
