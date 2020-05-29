@@ -62,15 +62,15 @@ const columns = [
     dataIndex: 'diskStoreSize'
   },
   {
-    title: 'JVM 缓存大小（单位：比特）',
+    title: 'JVM 缓存大小（单位: 字节）',
     dataIndex: 'onMemoryStoreBytes'
   },
   {
-    title: 'Off Heap缓存大小（单位：比特）',
+    title: 'Off Heap缓存大小（单位: 字节）',
     dataIndex: 'onOffHeapSizeBytes'
   },
   {
-    title: '硬盘缓存大小（单位：比特）',
+    title: '硬盘缓存大小（单位: 字节）',
     dataIndex: 'onDiskStoreSizeBytes'
   }
 ];
