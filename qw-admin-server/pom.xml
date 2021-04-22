@@ -79,7 +79,7 @@
 		<!-- cglib -->
 		<cglib.version>3.2.9</cglib.version>
 		<!-- shiro -->
-		<shiro-spring.version>1.4.0</shiro-spring.version>
+		<shiro-spring.version>1.7.0</shiro-spring.version>
 		<shiro-ehcache.version>1.5.1</shiro-ehcache.version>
 		<urlrewritefilter.version>4.0.4</urlrewritefilter.version>
 		<!-- ip 地址查找工具类 -->
