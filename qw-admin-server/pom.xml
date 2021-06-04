@@ -59,7 +59,7 @@
 		<!--excel-util-->
 		<excel-util.version>1.2.1</excel-util.version>
 		<!--http-client-->
-		<http-client.version>4.5.3</http-client.version>
+		<http-client.version>4.5.13</http-client.version>
 		<!--支付工具-->
 		<ijpay.version>1.1.9</ijpay.version>
 		<!--支付宝依赖版本-->
